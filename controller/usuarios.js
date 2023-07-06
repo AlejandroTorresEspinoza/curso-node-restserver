@@ -929,7 +929,7 @@ module.exports = {
 const mongoose = require("mongoose");
 const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
-const Usuario = require("../models/usuario");
+const Usuario = require('../models/usuario'); 
 const { validationResult } = require("express-validator");
 const usuariosGet = async (req = request, res = response) => {
   // const {q,nombre = 'no envia',apikey} = req.query;
@@ -1000,27 +1000,29 @@ const usuariosPost = async (req, res = response) => {
   });
 };
 
-//Borrado Fisico
-/*const usuariosDelete = async(req, res = response) => {
-        const {id} = req.params;
-        //borrado fisico.
-        const usuario = await Usuario.findByIdAndDelete(id);
-        res.json({
-        usuario
-        });
-        }*/
+const usuariosDelete = async(req = request, res = response) => {
+    const {id} = req.params;
 
-//Borrado Lógico
+    const usuarioAutenticado = req.Usuario;
+
+    const usuario = await Usuario.findByIdAndUpdate(id, {estado: false});
+
+
+    res.json({
+        usuario,
+        usuarioAutenticado
+    });
+}
+/*
 const usuariosDelete = async (req, res = response) => {
   const { id } = req.params;
-  //borrado fisico.
-  //const usuario = await Usuario.findByIdAndDelete(id);
-  //borrado logico:
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
   res.json({
     usuario,
   });
 };
+
+*/
 
 const usuariosPatch = (req, res = response) => {
   res.json({
@@ -1028,7 +1030,6 @@ const usuariosPatch = (req, res = response) => {
   });
 };
 
-//se exporta un objeto pues van haber muchos
 module.exports = {
   usuariosGet,
   usuariosPut,
@@ -1036,3 +1037,4 @@ module.exports = {
   usuariosDelete,
   usuariosPatch,
 };
+
