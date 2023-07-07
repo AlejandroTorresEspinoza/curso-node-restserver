@@ -63,14 +63,23 @@ class Server {
             }
            
             //aque se define el metodo middleware que publicara la carpeta public
-            middlewares(){
+            /*middlewares(){
                     //CORS
                     this.app.use(cors());
                     //lectura y parseo del body recibe lo que se envia
                     this.app.use(express.json());
                     //directorio publico
                     this.app.use(express.static('public'));
-                }
+                }*/
+
+            middlewares(){
+                //CORS
+                this.app.use(cors());
+                //lectura y parseo del body recibe lo que se envia
+                this.app.use(express.json());
+                //directorio publico
+                this.app.use(express.static('public'));
+                }
             routes() {
                         this.app.use(this.authPath, require('../routes/auth'));
                         this.app.use(this.usuariosPath, require('../routes/usuarios'));
